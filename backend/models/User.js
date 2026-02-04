@@ -1,73 +1,48 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-const paperSchema = new mongoose.Schema({
-  title: {
+const userSchema = new mongoose.Schema({
+  name: {
     type: String,
-    required: true,
+    required: [true, 'Please provide a name'],
     trim: true
   },
-  authors: [{
+  email: {
     type: String,
-    trim: true
-  }],
-  abstract: {
-    type: String,
-    required: true
-  },
-  arxivId: {
-    type: String,
+    required: [true, 'Please provide an email'],
     unique: true,
-    sparse: true // Allows null values
+    lowercase: true,
+    match: [
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+      'Please provide a valid email'
+    ]
   },
-  semanticScholarId: {
+  password: {
     type: String,
-    unique: true,
-    sparse: true
+    required: [true, 'Please provide a password'],
+    minlength: 6,
+    select: false // Don't return password by default
   },
-  url: {
+  role: {
     type: String,
-    required: true
-  },
-  pdfUrl: {
-    type: String
-  },
-  publishedDate: {
-    type: Date
-  },
-  categories: [{
-    type: String
-  }],
-  citationCount: {
-    type: Number,
-    default: 0
-  },
-  source: {
-    type: String,
-    enum: ['arxiv', 'semantic_scholar'],
-    required: true
-  },
-  // For vector search
-  embeddingId: {
-    type: String // Reference to embedding in ML service
-  },
-  // Metadata
-  keywords: [{
-    type: String
-  }],
-  methods: [{
-    type: String
-  }],
-  // User who added this paper
-  addedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    enum: ['user', 'admin'],
+    default: 'user'
   },
 }, { timestamps: true });
 
-// Indexes for better search performance
-paperSchema.index({ title: 'text', abstract: 'text' });
-paperSchema.index({ arxivId: 1 });
-paperSchema.index({ source: 1 });
-paperSchema.index({ createdAt: -1 });
+// Encrypt password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
 
-module.exports = mongoose.model('Paper', paperSchema);
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Compare password method
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+module.exports = mongoose.model('User', userSchema);
