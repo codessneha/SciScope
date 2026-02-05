@@ -1,0 +1,2 @@
+{"level":"info","message":"Server running in development mode on port 5000","service":"papernova-backend","timestamp":"2026-02-05 04:07:05"}
+{"level":"info","message":"SIGINT received. Shutting down gracefully.","service":"papernova-backend","timestamp":"2026-02-05 04:07:41"}
