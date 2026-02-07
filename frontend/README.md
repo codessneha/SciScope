@@ -1,70 +1,176 @@
-# Getting Started with Create React App
+# SciScope Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React-based frontend for SciScope AI Research Copilot.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- 🔍 **Paper Search** - Search arXiv and Semantic Scholar
+- 💬 **AI Chat** - Ask questions about research papers
+- 🕸️ **Knowledge Graph** - Visualize paper connections
+- 📊 **Dashboard** - Overview of your research activity
+- 🎨 **Modern UI** - Built with React + Tailwind CSS
 
-### `npm start`
+## Quick Start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js v18+
+- Backend API running on port 5000
+- ML Service running on port 8000 (for chat and graph features)
 
-### `npm test`
+### Installation
+```bash
+cd frontend
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Configuration
 
-### `npm run build`
+Create `.env` file:
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_ML_SERVICE_URL=http://localhost:8000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Run Development Server
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+App will open at `http://localhost:3000`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
+```
+frontend/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── common/          # Reusable components
+│   │   ├── layout/          # Layout components
+│   │   ├── papers/          # Paper-related components
+│   │   ├── chat/            # Chat components
+│   │   └── graph/           # Graph visualization
+│   ├── pages/               # Page components
+│   ├── services/            # API services
+│   ├── store/               # Zustand state management
+│   ├── hooks/               # Custom React hooks
+│   ├── utils/               # Utility functions
+│   ├── App.js               # Main app component
+│   └── index.js             # Entry point
+└── package.json
+```
 
-### `npm run eject`
+## Available Pages
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `/login` - User login
+- `/register` - User registration
+- `/dashboard` - Main dashboard
+- `/papers/search` - Search for papers
+- `/papers` - My papers library
+- `/chat` - Chat with papers
+- `/graph` - Knowledge graph visualization
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Key Dependencies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **React** - UI library
+- **React Router** - Routing
+- **Zustand** - State management
+- **Tailwind CSS** - Styling
+- **Axios** - HTTP client
+- **D3 / React Force Graph** - Graph visualization
+- **React Hot Toast** - Notifications
+- **React Markdown** - Markdown rendering
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Building for Production
+```bash
+npm run build
+```
 
-## Learn More
+Build files will be in `build/` directory.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Environment Variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `REACT_APP_API_URL` | Backend API URL | http://localhost:5000/api |
+| `REACT_APP_ML_SERVICE_URL` | ML service URL | http://localhost:8000 |
 
-### Code Splitting
+## Features by Page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Dashboard
+- Overview statistics
+- Quick actions
+- Recent papers and sessions
 
-### Analyzing the Bundle Size
+### Paper Search
+- Search arXiv and Semantic Scholar
+- Select papers for chat
+- View paper details
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### My Papers
+- View all saved papers
+- Select papers for sessions
+- Manage paper library
 
-### Making a Progressive Web App
+### Chat
+- Create chat sessions
+- Ask questions about papers
+- View AI-generated answers with citations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Knowledge Graph
+- Generate graph from selected papers
+- Interactive visualization
+- Explore connections
 
-### Advanced Configuration
+## Troubleshooting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### API Connection Error
+```
+Error: Network Error
+```
+**Solution:** Make sure backend is running on port 5000
 
-### Deployment
+### Chat Not Working
+```
+Error: Failed to get answer
+```
+**Solution:** Make sure ML service is running on port 8000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Build Warnings
+```
+Warning: Can't perform a React state update...
+```
+**Solution:** These are usually harmless in development. They won't appear in production build.
 
-### `npm run build` fails to minify
+## Development Tips
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Hot Reload
+Code changes automatically reload the page.
+
+### Component Development
+Each component is in its own file for easy maintenance.
+
+### State Management
+Zustand stores are in `src/store/` - simple and effective.
+
+### Styling
+Use Tailwind utility classes. Custom components in `src/index.css`.
+
+## Next Steps
+
+1. ✅ Frontend complete
+2. Test all features
+3. Build for production
+4. Deploy to Vercel/Netlify
+
+## Support
+
+For issues:
+1. Check console for errors
+2. Verify backend/ML service are running
+3. Check network tab for API calls
+4. Review environment variables
+
+## License
+
+MIT

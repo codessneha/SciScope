@@ -96,4 +96,4 @@ const KnowledgeGraphPage = () => {
   );
 };
 
-export default KnowledgeGraphPage;
+export default KnowledgeGraphPage; 
